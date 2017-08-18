@@ -19,6 +19,7 @@ import java.util.Scanner;
  */
 public class DeviceMethodSample
 {
+    private static IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
     private static final int METHOD_SUCCESS = 200;
     private static final int METHOD_HUNG = 300;
     private static final int METHOD_NOT_FOUND = 404;
@@ -98,8 +99,6 @@ public class DeviceMethodSample
 
         String connString = args[0];
 
-        IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
-
         System.out.println("Successfully read input parameters.");
         System.out.format("Using communication protocol %s.\n",
                 protocol.name());
@@ -123,7 +122,7 @@ public class DeviceMethodSample
         catch (Exception e)
         {
             System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \n" +  e.getMessage());
-            client.close();
+            client.closeNow();
             System.out.println("Shutting down...");
         }
 
@@ -131,7 +130,7 @@ public class DeviceMethodSample
 
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-        client.close();
+        client.closeNow();
         System.out.println("Shutting down...");
 
     }

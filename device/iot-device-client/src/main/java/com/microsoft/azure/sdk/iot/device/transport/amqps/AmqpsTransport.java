@@ -58,7 +58,6 @@ public final class AmqpsTransport implements IotHubTransport, ServerListener
     private Object stateCallbackContext;
 
     private final DeviceClientConfig config;
-    private final Boolean useWebSockets;
     private final CustomLogger logger;
 
     private final static String TO_KEY = "to";
@@ -70,14 +69,12 @@ public final class AmqpsTransport implements IotHubTransport, ServerListener
      * object.
      *
      * @param config configuration parameters for an AMQPS session with an IoT Hub
-     * @param useWebSockets whether the transport should use web sockets or not
      *
      */
-    public AmqpsTransport(final DeviceClientConfig config, Boolean useWebSockets)
+    public AmqpsTransport(final DeviceClientConfig config)
     {
         // Codes_SRS_AMQPSTRANSPORT_15_001: [The constructor shall save the input parameters into instance variables.]
         this.config = config;
-        this.useWebSockets = useWebSockets;
 
         // Codes_SRS_AMQPSTRANSPORT_15_002: [The constructor shall set the transport state to CLOSED.]
         this.state = State.CLOSED;
@@ -99,7 +96,7 @@ public final class AmqpsTransport implements IotHubTransport, ServerListener
         }
         logger.LogInfo("Opening the connection..., method name is %s ", logger.getMethodName());
         // Codes_SRS_AMQPSTRANSPORT_15_004: [The function shall open an AMQPS connection with the IoT Hub given in the configuration.]
-        this.connection = new AmqpsIotHubConnection(this.config, this.useWebSockets);
+        this.connection = new AmqpsIotHubConnection(this.config);
         try
         {
             // Codes_SRS_AMQPSTRANSPORT_15_005: [The function shall add the transport to the list of listeners subscribed to the connection events.]

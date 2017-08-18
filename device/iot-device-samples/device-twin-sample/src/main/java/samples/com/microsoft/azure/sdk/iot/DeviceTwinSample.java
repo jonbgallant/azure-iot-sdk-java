@@ -21,6 +21,10 @@ import java.util.Scanner;
  */
 public class DeviceTwinSample
 {
+    private static IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
+    // Edit for appropriate protocol to use
+    // IotHubClientProtocol protocol = IotHubClientProtocol.MQTT_WS;
+
     private enum LIGHTS{ ON, OFF, DISABLED }
 
     private enum CAMERA{ DETECTED_BURGLAR, SAFELY_WORKING }
@@ -90,7 +94,7 @@ public class DeviceTwinSample
 
         String connString = args[0];
 
-        IotHubClientProtocol protocol = IotHubClientProtocol.MQTT;
+
 
         System.out.println("Successfully read input parameters.");
         System.out.format("Using communication protocol %s.\n",
@@ -160,7 +164,7 @@ public class DeviceTwinSample
         {
             System.out.println("On exception, shutting down \n" + " Cause: " + e.getCause() + " \n" +  e.getMessage());
             homeKit.clean();
-            client.close();
+            client.closeNow();
             System.out.println("Shutting down...");
         }
 
@@ -170,7 +174,7 @@ public class DeviceTwinSample
         scanner.nextLine();
 
         homeKit.clean();
-        client.close();
+        client.closeNow();
 
         System.out.println("Shutting down...");
 
